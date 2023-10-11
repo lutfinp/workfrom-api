@@ -32,4 +32,10 @@ $router->group(['prefix' => 'buildings'], function () use ($router){
 });
 
 
+$router->group(['prefix' => 'customers'], function () use ($router){
+    $router->get('/all', 'CustomerController@all');
+    $router->post('/add', 'CustomerController@add');
+    $router->get('/show/{id}', 'CustomerController@show');
+});
+
 
