@@ -27,22 +27,22 @@ $app->withFacades();
 
 $app->withEloquent();
 
-// Register the CORS middleware
-$app->middleware([
-    \Barryvdh\Cors\HandleCors::class,
-]);
+// // Register the CORS middleware
+// $app->middleware([
+//     \Barryvdh\Cors\HandleCors::class,
+// ]);
 
-// ...
+// // ...
 
-// Register the CORS service provider
-$app->register(\Barryvdh\Cors\ServiceProvider::class);
+// // Register the CORS service provider
+// $app->register(\Barryvdh\Cors\ServiceProvider::class);
 
-// ...
+// // ...
 
-// Set the response factory
-$app->singleton(Illuminate\Contracts\Routing\ResponseFactory::class, function ($app) {
-    return new \Laravel\Lumen\Http\ResponseFactory;
-});
+// // Set the response factory
+// $app->singleton(Illuminate\Contracts\Routing\ResponseFactory::class, function ($app) {
+//     return new \Laravel\Lumen\Http\ResponseFactory;
+// });
 
 
 /*
@@ -90,9 +90,9 @@ $app->configure('app');
 |
 */
 
-// $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
-// ]);
+$app->middleware([
+    App\Http\Middleware\CorsMiddleware::class
+]);
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
