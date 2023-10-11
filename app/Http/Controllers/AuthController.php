@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -40,26 +42,21 @@ class AuthController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
 
-
         $user = User::where('email', $email)->first();
-        if($user){
-            if(Hash::check($password, $user->password)){
 
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Login Succes',
-                    'data' => [
-                        'user' => $user,
-                    ]
-                ], 201);
-            }
-            else{
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Login Fail',
-                    'data' => ''
-                ], 400);
-            }
+        if(Hash::check($password, $user->password)){
+            $apiToken = base64_encode(Str::random(40));
+
+            $user->update([
+                'api_token' =>$apiToken
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Login Succes',
+                'data' => $user,
+                'api_token' => $apiToken
+            ], 201);
         }
         else{
             return response()->json([
@@ -68,7 +65,5 @@ class AuthController extends Controller
                 'data' => ''
             ], 400);
         }
-
-       
     }
 }

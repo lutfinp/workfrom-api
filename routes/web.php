@@ -13,7 +13,6 @@
 |
 */
 
-use Illuminate\Support\Str;
 
 $router->get('/', function () use ($router) {
     return $router->app->version();
@@ -23,4 +22,14 @@ $router->group(['prefix' => 'auth'], function () use ($router){
     $router->post('/register', 'AuthController@register');
     $router->post('/login', 'AuthController@login');
 });
+
+$router->group(['prefix' => 'buildings'], function () use ($router){
+    $router->get('/all', 'BuildingController@all');
+    $router->post('/add', 'BuildingController@add');
+    $router->get('/show/{id}', 'BuildingController@show');
+    $router->put('/update/{id}', 'BuildingController@update');
+    $router->delete('/delete/{id}', 'BuildingController@delete');
+});
+
+
 
