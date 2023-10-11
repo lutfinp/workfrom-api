@@ -38,4 +38,4 @@ $router->group(['prefix' => 'customers'], function () use ($router){
     $router->get('/show/{id}', 'CustomerController@show');
 });
 
-
+$router->get('/all', 'ViewController@all');
