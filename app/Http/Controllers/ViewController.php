@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Building;
+use Illuminate\Support\Facades\Auth;
 
 class ViewController extends Controller
 {
@@ -17,9 +18,9 @@ class ViewController extends Controller
 
     public function all(){
         $buildings = Building::all();
-        if (empty($building)) {
+        if ($buildings->count() === 0) {
             return response()->json([
-                'message' => 'Data not found'
+                'message' => 'Data not found',
             ]);
         }
         return response()->json($buildings);

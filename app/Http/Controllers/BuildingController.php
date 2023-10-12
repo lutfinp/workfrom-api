@@ -20,9 +20,9 @@ class BuildingController extends Controller
 
     public function all(){
         $buildings = Building::where('owner_id', Auth::user()->id)->get();
-        if (empty($building)) {
+        if ($buildings->count() === 0) {
             return response()->json([
-                'message' => 'Data not found'
+                'message' => 'Data not found',
             ]);
         }
         return response()->json($buildings);
@@ -45,11 +45,15 @@ class BuildingController extends Controller
         $building->location = $validated['location'];
         $building->size = $validated['size'];
         $building->accommodate = $validated['accommodate'];
+        $building->desc = $validated['desc'];
         $building->price = $validated['price'];
         $building->category = $validated['category'];
         $building->owner_id = Auth::user()->id;
         $building->save();
-        return response()->json($building);
+        return response()->json([
+            'message' => 'success',
+            'data' => $building
+        ]);
 
     }
 
@@ -86,6 +90,7 @@ class BuildingController extends Controller
         $building->location = $validated['location'];
         $building->size = $validated['size'];
         $building->type = $validated['type'];
+        $building->desc = $validated['desc'];
         $building->price = $validated['price'];
         $building->category = $validated['category'];
         $building->save();

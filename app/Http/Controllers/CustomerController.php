@@ -5,7 +5,7 @@ use App\Models\Building;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class BuildingController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -19,9 +19,9 @@ class BuildingController extends Controller
 
     public function all(){
         $buildings = Building::all();
-        if (empty($building)) {
+        if ($buildings->count() === 0) {
             return response()->json([
-                'message' => 'Data not found'
+                'message' => 'Data not found',
             ]);
         }
         return response()->json($buildings);
