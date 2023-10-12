@@ -27,7 +27,7 @@ class CustomerController extends Controller
         return response()->json($buildings);
     }
 
-    public function showloc(Request $request, $loc){
+    public function showcustloct(Request $request, $loc){
         $building = Building::where('location', $loc)->get();
         if (empty($building)) {
             return response()->json([
@@ -41,8 +41,8 @@ class CustomerController extends Controller
 
     }
     
-    public function showcat(Request $request, $cat){
-        $building = Building::where('location', $cat)->get();
+    public function showcustcat(Request $request, $cat){
+        $building = Building::where('category', $cat)->get();
         if (empty($building)) {
             return response()->json([
                 'message' => 'Data not found'

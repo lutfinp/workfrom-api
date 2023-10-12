@@ -13,7 +13,6 @@
 |
 */
 
-
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
@@ -24,20 +23,17 @@ $router->group(['prefix' => 'auth'], function () use ($router){
 });
 
 $router->group(['prefix' => 'buildings'], function () use ($router){
-    $router->get('/all', 'BuildingController@all');
-    $router->post('/add', 'BuildingController@add');
-    $router->get('/show/{id}', 'BuildingController@show');
-    $router->put('/update/{id}', 'BuildingController@update');
-    $router->delete('/delete/{id}', 'BuildingController@delete');
+    $router->get('/allbuild', 'BuildingController@all');
+    $router->post('/addbuild', 'BuildingController@add');
+    $router->get('/showbuild/{id}', 'BuildingController@show');
+    $router->put('/updatebuild/{id}', 'BuildingController@update');
+    $router->delete('/deletebuild/{id}', 'BuildingController@delete');
 });
-
 
 $router->group(['prefix' => 'customers'], function () use ($router){
     $router->get('/all', 'CustomerController@all');
-    $router->post('/add', 'CustomerController@add');
-    $router->get('/show/{id}', 'CustomerController@showid');
-    $router->post('/show/{loc}', 'CustomerController@showloc');
-    $router->post('/show/{cat}', 'CustomerController@showcat');
+    $router->get('/showcustloc/{loc}', 'CustomerController@showcustloc');
+    $router->get('/showcustcat/{cat}', 'CustomerController@showcustcat');
 });
 
 $router->get('/all', 'ViewController@all');
