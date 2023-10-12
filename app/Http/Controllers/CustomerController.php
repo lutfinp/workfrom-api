@@ -27,7 +27,7 @@ class CustomerController extends Controller
         return response()->json($buildings);
     }
 
-    public function showcustloct(Request $request, $loc){
+    public function showcustloc(Request $request, $loc){
         $building = Building::where('location', $loc)->get();
         if (empty($building)) {
             return response()->json([
