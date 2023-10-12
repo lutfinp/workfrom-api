@@ -57,6 +57,8 @@ class BuildingController extends Controller
 
     }
 
+    
+
     public function show(Request $request, $id)
     {
         $building = Building::where('user_id', $id)->where('owner_id', Auth::user()->id)->first();

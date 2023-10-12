@@ -35,7 +35,9 @@ $router->group(['prefix' => 'buildings'], function () use ($router){
 $router->group(['prefix' => 'customers'], function () use ($router){
     $router->get('/all', 'CustomerController@all');
     $router->post('/add', 'CustomerController@add');
-    $router->get('/show/{id}', 'CustomerController@show');
+    $router->get('/show/{id}', 'CustomerController@showid');
+    $router->post('/show/{loc}', 'CustomerController@showloc');
+    $router->post('/show/{cat}', 'CustomerController@showcat');
 });
 
 $router->get('/all', 'ViewController@all');
