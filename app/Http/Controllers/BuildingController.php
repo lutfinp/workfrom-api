@@ -33,8 +33,11 @@ class BuildingController extends Controller
             'name' => 'required|max:255',
             'facility' => 'required',
             'location' => 'required',
+            'city' => 'required',
+            'provinc' => 'required',
             'size' => 'required',
             'accommodate' => 'required',
+            'description' => 'required',
             'price' => 'required',
             'category' => 'required'
         ]);
@@ -43,9 +46,11 @@ class BuildingController extends Controller
         $building->name = $validated['name'];
         $building->facility = $validated['facility'];
         $building->location = $validated['location'];
+        $building->city = $validated['city'];
+        $building->provinc = $validated['provinc'];
         $building->size = $validated['size'];
         $building->accommodate = $validated['accommodate'];
-        $building->desc = $validated['desc'];
+        $building->description = $validated['description'];
         $building->price = $validated['price'];
         $building->category = $validated['category'];
         $building->owner_id = Auth::user()->id;
@@ -82,6 +87,8 @@ class BuildingController extends Controller
             'name' => 'required|max:255',
             'facility' => 'required',
             'location' => 'required',
+            'city' => 'required',
+            'provinc' => 'required',
             'size' => 'required',
             'accommodate' => 'required',
             'price' => 'required',
@@ -90,9 +97,12 @@ class BuildingController extends Controller
         $building->name = $validated['name'];
         $building->facility = $validated['facility'];
         $building->location = $validated['location'];
+        $building->city = $validated['city'];
+        $building->provinc = $validated['provinc'];
         $building->size = $validated['size'];
         $building->type = $validated['type'];
-        $building->desc = $validated['desc'];
+        $building->accommodate = $validated['accommodate'];
+        $building->description = $validated['description'];
         $building->price = $validated['price'];
         $building->category = $validated['category'];
         $building->save();
