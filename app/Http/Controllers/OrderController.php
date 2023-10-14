@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Building;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,40 +18,51 @@ class OrderController extends Controller
         $this->middleware('auth');
     }
 
-    public function add(Request $request){
+    public function allorders() {
+        $orders = Order::where('customer_id', Auth::user()->id)->get();
+    
+        $orderDetails = [];
+    
+        foreach ($orders as $order) {
+            $building = Building::where('user_id', $order->building_id)->first();
+            if ($building) {
+                $orderDetails[] = $building;
+            }
+        }
+    
+        return response()->json([
+            'message' => 'Success',
+            'data' => $orderDetails
+        ]);
+    }
+
+    public function addorders(Request $request, $id){
         $validated = $this->validate($request, [
             'start' => 'required',
             'finish' => 'required',
             'price' => 'required',
         ]);
-
+    
+        $building = Building::find($id);
+    
+        if (!$building) {
+            return response()->json([
+                'message' => 'Bangunan tidak ditemukan',
+            ], 404);
+        }
+    
         $order = new Order();
-        $order->start = $validated['start'];
-        $order->finish = $validated['finish'];
+        $order->start = date('Y-m-d', strtotime($validated['start']));
+        $order->finish = date('Y-m-d', strtotime($validated['finish']));
         $order->price = $validated['price'];
         $order->customer_id = Auth::user()->id;
+        $order->building_id = $id;
         $order->save();
+    
         return response()->json([
             'message' => 'success',
             'data' => $order
         ]);
     }
 
-    public function showOrdersForUserAndBuilding(Request $request, $user_id, $building_id)
-    {
-        // Mengambil order berdasarkan user_id dan building_id
-        $orders = Order::where('user_id', $user_id)
-                      ->where('building_id', $building_id)
-                      ->get();
-
-        return response()->json($orders);
-    }
-
-    public function showOrdersForOwner(Request $request, $owner_id)
-    {
-        // Mengambil order berdasarkan owner_id
-        $orders = Order::where('owner_id', $owner_id)->get();
-
-        return response()->json($orders);
-    }
 }

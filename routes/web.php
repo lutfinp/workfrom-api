@@ -37,4 +37,9 @@ $router->group(['prefix' => 'customers'], function () use ($router){
     $router->get('/showcustcat/{cat}', 'CustomerController@showcustcat');
 });
 
+$router->group(['prefix' => 'orders'], function () use ($router){
+    $router->get('/allorders', 'OrderController@allorders');
+    $router->post('/addorders/{id}', 'OrderController@addorders');
+});
+
 $router->get('/all', 'ViewController@all');
