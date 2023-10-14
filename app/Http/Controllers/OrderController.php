@@ -43,14 +43,6 @@ class OrderController extends Controller
             'price' => 'required',
         ]);
     
-        $building = Building::find($id);
-    
-        if (!$building) {
-            return response()->json([
-                'message' => 'Bangunan tidak ditemukan',
-            ], 404);
-        }
-    
         $order = new Order();
         $order->start = date('Y-m-d', strtotime($validated['start']));
         $order->finish = date('Y-m-d', strtotime($validated['finish']));
