@@ -5,6 +5,7 @@ use App\Models\Building;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class BuildingController extends Controller
 {
     /**
@@ -76,42 +77,35 @@ class BuildingController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        $building = Building::where('user_id', $id)->where('owner_id', Auth::user()->id)->first();
-        if (empty($building)) {
-            return response()->json([
-                'message' => 'Data not found'
-            ]);
-        }
-        $validated = $this->validate($request, [
-            'name' => 'required|max:255',
-            'facility' => 'required',
-            'location' => 'required',
-            'city' => 'required',
-            'provinc' => 'required',
-            'size' => 'required',
-            'accommodate' => 'required',
-            'price' => 'required',
-            'category' => 'required'
-        ]);
-        $building->name = $validated['name'];
-        $building->facility = $validated['facility'];
-        $building->location = $validated['location'];
-        $building->city = $validated['city'];
-        $building->provinc = $validated['provinc'];
-        $building->size = $validated['size'];
-        $building->type = $validated['type'];
-        $building->accommodate = $validated['accommodate'];
-        $building->description = $validated['description'];
-        $building->price = $validated['price'];
-        $building->category = $validated['category'];
-        $building->save();
-        return response()->json($building);
+{
+    // Pastikan hanya pemilik bangunan yang dapat mengupdate
+    $building = Building::where('user_id', $id)->where('owner_id', Auth::user()->id)->first();
+
+    if (empty($building)) {
+        return response()->json(['message' => 'Data not found'], 404);
     }
+
+    $validated = $this->validate($request, [
+        'name' => 'required|max:255',
+        'facility' => 'required',
+        'location' => 'required',
+        'city' => 'required',
+        'provinc' => 'required', // Ubah 'provinc' menjadi 'province'
+        'size' => 'required',
+        'accommodate' => 'required',
+        'description' => 'required',
+        'price' => 'required',
+        'category' => 'required'
+    ]);
+
+    $building->update($validated);
+
+    return response()->json(['message' => 'Data updated successfully', 'building' => $building]);
+}
 
     public function delete(Request $request, $id)
     {
-        $building = Building::where('user_id', $id)->where('owner_id', Auth::user()->id)->first();
+        $building = Building::where('user_id', $id);
         if (empty($building)) {
             return response()->json([
                 'message' => 'Data not found'

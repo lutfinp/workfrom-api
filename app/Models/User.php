@@ -34,4 +34,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function buildings(){
         return $this->hasMany(Building::class);
     }
+
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
 }

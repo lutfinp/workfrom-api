@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;

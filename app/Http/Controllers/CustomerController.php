@@ -27,11 +27,22 @@ class CustomerController extends Controller
         return response()->json($buildings);
     }
 
-    public function showcustloc(Request $request, $loc){
-        $building = Building::where('location', $loc)->get();
-        if (empty($building)) {
+    public function showcustid(Request $request, $id)
+    {
+        $building = Building::where('user_id', $id)->first();
+        if ($building->count() === 0) {
             return response()->json([
-                'message' => 'Data not found'
+                'message' => 'Data not found',
+            ]);
+        }
+        return response()->json($building);
+    }
+
+    public function showcustcity(Request $request, $city){
+        $building = Building::where('city', $city)->get();
+        if ($building->count() === 0) {
+            return response()->json([
+                'message' => 'Data not found',
             ]);
         }
         return response()->json([
